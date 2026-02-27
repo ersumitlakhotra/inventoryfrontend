@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SearchOutlined, PlusOutlined } from '@ant-design/icons';
 import {  Input } from "antd";
 import { useOutletContext } from "react-router-dom";
@@ -6,12 +6,16 @@ import IsLoading from "../../common/isLoading";
 import Card from "./card"
 
 const Users = () => {
+  const divRef = useRef(null);
     const [filteredList, setFilteredList] = useState([]);
     const {refresh, isLoading, setIsLoading, userList, editUser, getUser} = useOutletContext();
     const [searchInput, setSearchInput] = useState('');
 
     useEffect(() => {
         Init();
+            if (divRef.current) {
+      divRef.current.scrollTop = 0;
+    }
     }, [refresh])
 
     const Init = async () => {
@@ -35,7 +39,7 @@ const Users = () => {
         <div class="flex flex-col font-normal w-full h-screen bg-gray-100 relative">
 
             {/* Header */}
-            <div className="bg-gradient-to-r from-blue-600 to-red-500 p-5 text-white  rounded-b-2xl sticky top-0 z-50 ">
+            <div className="bg-teal-500 p-5 text-white  rounded-b-2xl sticky top-0 z-50 ">
                 <div className="flex justify-between items-center mb-4">
                     <span> </span>
                     <h1 className="font-semibold text-lg">
@@ -49,7 +53,7 @@ const Users = () => {
 
             {/* Content */}
             <IsLoading isLoading={isLoading} rows={10} input={
-            <div className="p-4 space-y-4 overflow-y-auto h-[calc(100%-180px)]">
+            <div className="p-4 space-y-4 overflow-y-auto h-[calc(100%-180px)]" ref={divRef}>
                 {
                 filteredList.length ===0 ? 
                 <div className="flex justify-between items-center mt-2 text-xs text-gray-400">

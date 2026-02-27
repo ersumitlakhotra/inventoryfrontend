@@ -1,27 +1,32 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SearchOutlined, PlusOutlined } from '@ant-design/icons';
-import {  Input } from "antd";
+import { Input } from "antd";
 import { useOutletContext } from "react-router-dom";
 import IsLoading from "../../common/isLoading";
 import Card from "./card";
 
 const Inventory = () => {
+
+    const divRef = useRef(null);
     const [filteredList, setFilteredList] = useState([]);
-    const { refresh, isLoading, setIsLoading, inventoryList, editInventory,viewInventory, getInventory} = useOutletContext();
+    const { refresh, isLoading, setIsLoading, inventoryList, editInventory, viewInventory, getInventory } = useOutletContext();
     const [searchInput, setSearchInput] = useState('');
 
     useEffect(() => {
         Init();
+        if (divRef.current) {
+            divRef.current.scrollTop = 0;
+        }
     }, [refresh])
 
     const Init = async () => {
         setIsLoading(true);
-        const response=await getInventory();
+        const response = await getInventory();
         setFilteredList(response);
         setIsLoading(false);
-    } 
-    
-   
+    }
+
+
     useEffect(() => {
         const query = (searchInput || "").toLowerCase();
         let searchedList = inventoryList.filter(item =>
@@ -50,29 +55,29 @@ const Inventory = () => {
 
             {/* Content */}
             <IsLoading isLoading={isLoading} rows={10} input={
-            <div className="p-4 space-y-4 overflow-y-auto h-[calc(100%-180px)]">
-                {
-                filteredList.length ===0 ? 
-                <div className="flex justify-between items-center mt-2 text-xs text-gray-400">
-                        <span>No data found</span>
-                        
-                    </div> :
-                filteredList.map((item) => (
-                    <Card
-                        id={item.id} 
-                        user={item.user}
-                        title={item.name}
-                        description={item.description}
-                        modifiedat={item.modifiedat}
-                        picture={item.picture}
-                        inventory={viewInventory}
-                        isEdit={false}
-                       
-                    />
-                ))}
-               
-            </div>
-            }/>
+                <div className="p-4 space-y-4 overflow-y-auto h-[calc(100%-180px)]" ref={divRef}>
+                    {
+                        filteredList.length === 0 ?
+                            <div className="flex justify-between items-center mt-2 text-xs text-gray-400">
+                                <span>No data found</span>
+
+                            </div> :
+                            filteredList.map((item) => (
+                                <Card
+                                    id={item.id}
+                                    user={item.user}
+                                    title={item.name}
+                                    description={item.description}
+                                    modifiedat={item.modifiedat}
+                                    picture={item.picture}
+                                    inventory={viewInventory}
+                                    isEdit={false}
+
+                                />
+                            ))}
+
+                </div>
+            } />
         </div>
     )
 }

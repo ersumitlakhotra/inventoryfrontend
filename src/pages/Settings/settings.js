@@ -42,7 +42,7 @@ const Settings = () => {
         <div class="flex flex-col font-normal w-full h-screen bg-gray-100 relative">
 
             {/* Header */}
-            <div className="bg-gradient-to-r from-red-500 to-gray-400 p-5 text-white  rounded-b-2xl sticky top-0 z-50 ">
+            <div className="bg-red-400 p-5 text-white  rounded-b-2xl sticky top-0 z-50 ">
                
 
                 {/* Stats Card */}
