@@ -38,7 +38,7 @@ const Inventory = () => {
     }, [searchInput])
 
     return (
-        <div class="flex flex-col font-normal w-full h-screen bg-gray-100 relative">
+        <div class="flex flex-col font-normal w-full h-screen bg-gray-100 relative " ref={divRef}>
 
             {/* Header */}
             <div className="bg-orange-300 p-5 text-white  rounded-b-2xl sticky top-0 z-50 ">
@@ -55,7 +55,7 @@ const Inventory = () => {
 
             {/* Content */}
             <IsLoading isLoading={isLoading} rows={10} input={
-                <div className="p-4 space-y-4 overflow-y-auto h-[calc(100%)]" ref={divRef}>
+                <div className="p-4 space-y-4 overflow-y-auto h-[calc(100%-180px)]" >
                     {
                         filteredList.length === 0 ?
                             <div className="flex justify-between items-center mt-2 text-xs text-gray-400">

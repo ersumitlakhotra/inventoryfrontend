@@ -70,7 +70,7 @@ const Repair = () => {
   }
 
   return (
-    <div class="flex flex-col font-normal w-full h-screen bg-gray-100 relative">
+    <div class="flex flex-col font-normal w-full h-screen bg-gray-100 relative" ref={divRef}>
 
       {/* Header */}
       <div className="bg-green-500 p-5 text-white  rounded-b-2xl sticky top-0 z-50 ">
@@ -83,22 +83,20 @@ const Repair = () => {
         </div>
 
         {/* Stats Card */}
-        <div className="bg-white text-gray-800 rounded-2xl shadow-md p-4 flex justify-between">
+        <div className="bg-white text-gray-800 rounded-2xl shadow-md p-4 flex justify-between mb-4">
           <HeaderItem title={'overall'} value={repairList} />
           <HeaderItem title={'to do'} value={repairList.filter(item => item.status === 'Pending')} />
           <HeaderItem title={'in progress'} value={repairList.filter(item => item.status === 'In progress')} />
           <HeaderItem title={'due month'} value={repairList.filter(item => (item.status === 'Pending' || item.status === 'In progress') && get_Date(item.duedate, 'YYYY-MM-DD') >= fromDate && get_Date(item.duedate, 'YYYY-MM-DD') <= toDate)} />
 
         </div>
-      </div>
-
-      <div className="p-4 flex justify-between items-center text-gray-500 text-sm  sticky top-0 z-50">
-        <Input size="large" placeholder="Search" prefix={<SearchOutlined />} value={searchInput} onChange={(e) => setSearchInput(e.target.value)} allowClear />
+         <Input size="large" placeholder="Search" prefix={<SearchOutlined />} value={searchInput} onChange={(e) => setSearchInput(e.target.value)} allowClear />
+      
       </div>
 
       {/* Content */}
       <IsLoading isLoading={isLoading} rows={10} input={
-        <div className="p-4 space-y-4 overflow-y-auto h-[calc(100%-270px)]" ref={divRef}>
+        <div className="p-4 space-y-4 overflow-y-auto h-[calc(100%-270px)]" >
           {
             filteredList.length === 0 ?
               <div className="flex justify-between items-center mt-2 text-xs text-gray-400">

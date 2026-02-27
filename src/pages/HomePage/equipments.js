@@ -7,7 +7,7 @@ import { CameraOutlined, RightOutlined } from '@ant-design/icons';
 
 const Equipments = () => {
     const [filteredList, setFilteredList] = useState([]);
-    const { refresh, isLoading, setIsLoading,  getEquipment,  viewEquipment } = useOutletContext();
+    const { refresh, isLoading, setActiveTab,setIsLoading,  getEquipment,  viewEquipment } = useOutletContext();
 
     useEffect(() => {
         Init();
@@ -24,8 +24,8 @@ const Equipments = () => {
         <div className="w-full mt-4 ">
             <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-semibold ">Equipment List</h2>
-                <h2 className="text-xs text-blue-400 italic ">see all</h2>
-              <RightOutlined size={12} /> 
+                <h2 className="text-xs text-blue-400 italic underline " onClick={()=> setActiveTab('equipment')}>see all</h2>
+              
             </div>
             {/* Scroll Container */}
             <div className="flex gap-3 overflow-x-auto scrollbar-hide cursor-pointer ">
