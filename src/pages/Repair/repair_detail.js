@@ -9,7 +9,7 @@ import { TextboxFlex } from '../../common/textbox.js';
 import { LocalDate } from '../../common/localDate.js';
 import dayjs from 'dayjs';
 
-const RepairDetail = ({ id, uid, reload, ref, setOpen, isLoading, setIsLoading, saveData, equipmentList, itemsList, equipmentId, useEquipmentId = false }) => {
+const RepairDetail = ({ id, uid, reload, ref,refresh, setOpen, isLoading, setIsLoading, saveData, equipmentList, itemsList, equipmentId, useEquipmentId = false  }) => {
     const { TextArea } = Input;
     const {contextHolder,  warning } = useAlert();
     const [unit, setUnit] = useState('');
@@ -33,11 +33,18 @@ const RepairDetail = ({ id, uid, reload, ref, setOpen, isLoading, setIsLoading, 
         if (id === 0) {
 
             if (useEquipmentId)
+            {
                 setRefid(equipmentId)
+                const getUnit = equipmentList.find(item => item.id === equipmentId)
+                setUnit(getUnit.unit)
+            }
             else
+            {
                 setRefid('');
+                setUnit('');
+            }
 
-            setUnit(''); setReftype('Equipment'); setName(''); setExpire(LocalDate()); setDuedate(LocalDate()); setStatus('Pending');
+            setReftype('Equipment'); setName(''); setExpire(LocalDate()); setDuedate(LocalDate()); setStatus('Pending');
             setQuantity('1'); setPrice('0.00'); setKilometer('0.00');
             setDescription(''); setNotes(''); setServicesItem([]);
         }
@@ -45,6 +52,7 @@ const RepairDetail = ({ id, uid, reload, ref, setOpen, isLoading, setIsLoading, 
             load();
         }
     }, [reload])
+
 
     const load = async () => {
         setIsLoading(true)

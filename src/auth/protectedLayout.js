@@ -257,7 +257,7 @@ const ProtectedLayout = () => {
             {/* Drawer on Add/ Edit Repair*/}
             <Drawer title={repairTitle} placement='right' width={400} onClose={() => setOpenRepairEdit(false)} open={openRepairEdit} zIndex={999}
                 extra={<Space><Button type="primary" icon={<SaveOutlined />} onClick={btnSave} >Save</Button></Space>}>
-                <RepairDetail id={repairid} uid={uid} reload={reload} ref={ref} setOpen={setOpenRepairEdit} isLoading={isLoading} setIsLoading={setIsLoading} saveData={saveData} equipmentList={equipmentList} itemsList={itemsList} equipmentId={equipmentid} useEquipmentId={useEquipmentId} />
+                <RepairDetail id={repairid} uid={uid} reload={reload} ref={ref} setOpen={setOpenRepairEdit} isLoading={isLoading} setIsLoading={setIsLoading} saveData={saveData} equipmentList={equipmentList} itemsList={itemsList} equipmentId={equipmentid} useEquipmentId={useEquipmentId}/>
             </Drawer>
 
               {/* Drawer on View Repair*/}

@@ -7,7 +7,7 @@ import Card from "./card";
 
 const Equipment = () => {
     const [filteredList, setFilteredList] = useState([]);
-    const { refresh, isLoading, setIsLoading, equipmentList, getEquipment, editEquipment, viewEquipment } = useOutletContext();
+    const { refresh, isLoading, setIsLoading, getItems, equipmentList, getEquipment, editEquipment, viewEquipment } = useOutletContext();
     const [searchInput, setSearchInput] = useState('');
 
     useEffect(() => {
@@ -18,6 +18,7 @@ const Equipment = () => {
     const Init = async () => {
         setIsLoading(true);
         const response = await getEquipment();
+        await getItems();
         setFilteredList(response);
         setIsLoading(false);
     }
