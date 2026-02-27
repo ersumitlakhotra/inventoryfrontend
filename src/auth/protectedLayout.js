@@ -62,8 +62,8 @@ const ProtectedLayout = () => {
     const [userShowStatus, setUserShowStatus] = useState(false);
 
     useEffect(() => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    }, [activeTab]);
+        window.scrollTo(0,0);
+    }, [pathname,activeTab]);
 
     useEffect(() => {
         if (navigationType === "POP") {
