@@ -42,53 +42,55 @@ const HomePage = () => {
     }
 
     return (
-        <div class="flex flex-col gap-4 p-4 font-normal w-full overflow-y-auto h-screen bg-white relative">
+        <div class="flex flex-col font-normal w-full h-screen bg-gray-100 relative" >
 
             {/* Header */}
-            <div className="flex justify-between items-center ">
-                {/* Header*/}
-                <div className=" flex flex-row items-center gap-4 ">
-                    <div>
-                        {picture !== null ?
-                            <Image width={60} height={60} src={picture} style={{ borderRadius: 30 }} /> :
-                            <Avatar size={60} shape='circle' style={{ backgroundColor: 'whitesmoke' }} icon={<CameraOutlined style={{ color: 'silver' }} />} />
-                        }
-                    </div>
-                    <div className="text-start align-middle">
-                        <p className="font-bold text-lg text-black uppercase">{fullname}</p>
-                        <p className="text-xs font-medium  text-gray-400">Good Day : {get_Date(LocalDate(), 'MMM DD, YYYY')}</p>
-                    </div>
+            <div className=" p-4 sticky top-0 z-50 ">
+                <div className="flex justify-between items-center mb-4 ">
+                    <div className=" flex flex-row items-center gap-4 ">
+                        <div>
+                            {picture !== null ?
+                                <Image width={60} height={60} src={picture} style={{ borderRadius: 30 }} /> :
+                                <Avatar size={60} shape='circle' style={{ backgroundColor: 'whitesmoke' }} icon={<CameraOutlined style={{ color: 'silver' }} />} />
+                            }
+                        </div>
+                        <div className="text-start align-middle">
+                            <p className="font-bold text-lg text-black uppercase">{fullname}</p>
+                            <p className="text-xs font-medium  text-gray-400">Good Day : {get_Date(LocalDate(), 'MMM DD, YYYY')}</p>
+                        </div>
 
+                    </div>
+                    <Popconfirm
+                        title={"Sign out"}
+                        description="Are you sure you want to Sign out ? "
+                        onConfirm={() => logout()}
+                        okText="Yes"
+                        cancelText="No"
+                    >
+                        <Button danger shape="circle" icon={<LogoutOutlined />} size='large' />
+                    </Popconfirm>
                 </div>
-                <Popconfirm
-                    title={"Sign out"}
-                    description="Are you sure you want to Sign out ? "
-                    onConfirm={() => logout()}
-                    okText="Yes"
-                    cancelText="No"
-                >
-                    <Button danger shape="circle" icon={<LogoutOutlined />} size='large' />
-                </Popconfirm>
-
+                <SearchHome />
             </div>
 
-         <SearchHome/>
+
             {/* Repairs */}
-            <div className="p-4 w-full flex justify-between bg-green-200 rounded-lg shadow cursor-pointer" onClick={() => setActiveTab('repair')}>
-                <div className="flex flex-col gap-1 w-3/4">
-                    <h2 className=" font-bold text-green-800">Repair to do</h2>
-                    <span className="text-xs font-medium text-green-500 mb-2">
-                        {`${repairList.filter(item => (item.status === 'Pending' || item.status === 'In progress') && get_Date(item.duedate, 'YYYY-MM-DD') >= fromDate && get_Date(item.duedate, 'YYYY-MM-DD') <= toDate).length}
+            <div className="p-4 space-y-4 overflow-y-auto h-[calc(100%-180px)]" >
+                <div className="p-4 w-full flex justify-between bg-green-200 rounded-lg shadow cursor-pointer" onClick={() => setActiveTab('repair')}>
+                    <div className="flex flex-col gap-1 w-3/4">
+                        <h2 className=" font-bold text-green-800">Repair to do</h2>
+                        <span className="text-xs font-medium text-green-500 mb-2">
+                            {`${repairList.filter(item => (item.status === 'Pending' || item.status === 'In progress') && get_Date(item.duedate, 'YYYY-MM-DD') >= fromDate && get_Date(item.duedate, 'YYYY-MM-DD') <= toDate).length}
                           due between ${get_Date(fromDate, 'MMM DD, YYYY')} to ${get_Date(toDate, 'MMM DD, YYYY')}`}
-                    </span>
-                    <Button color="green" variant="solid" size='medium' style={{ width: '100px' }} >View List <RightOutlined size={12} /></Button>
+                        </span>
+                        <Button color="green" variant="solid" size='medium' style={{ width: '100px' }} >View List <RightOutlined size={12} /></Button>
+                    </div>
+                    <ToolFilled style={{ fontSize: 64, color: 'green' }} onClick={() => setActiveTab('repair')} />
                 </div>
-                <ToolFilled style={{ fontSize: 64, color: 'green' }} onClick={() => setActiveTab('repair')} />
+
+                <Users />
+                <Equipments />
             </div>
-
-            <Users />
-            <Equipments />
-
 
         </div>
     )

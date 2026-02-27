@@ -24,7 +24,7 @@ const Equipments = () => {
         <div className="w-full mt-4 ">
             <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-semibold ">Equipment List</h2>
-                <h2 className="text-xs text-blue-400 italic underline " onClick={()=> setActiveTab('equipment')}>see all</h2>
+                <h2 className="text-xs text-blue-400 italic underline cursor-pointer " onClick={()=> setActiveTab('equipment')}>see all</h2>
               
             </div>
             {/* Scroll Container */}
