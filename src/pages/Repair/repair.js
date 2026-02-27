@@ -1,6 +1,6 @@
 
 import { useEffect, useRef, useState } from "react";
-import {  PlusOutlined, SearchOutlined } from '@ant-design/icons';
+import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { useOutletContext } from "react-router-dom";
 import IsLoading from "../../common/isLoading";
 import Card from "./card";
@@ -16,11 +16,11 @@ const Repair = () => {
   const [fromDate, setFromDate] = useState(dayjs(firstDateOfMonth(new Date())).format("YYYY-MM-DD"));
   const [toDate, setToDate] = useState(dayjs(lastDateOfMonth(new Date())).format("YYYY-MM-DD"));
   const [header, setHeader] = useState('due month');
-  const [searchList,setSearchList]= useState([])
+  const [searchList, setSearchList] = useState([])
 
   useEffect(() => {
     Init();
-     if (divRef.current) {
+    if (divRef.current) {
       divRef.current.scrollTop = 0;
     }
   }, [refresh])
@@ -35,7 +35,7 @@ const Repair = () => {
     setIsLoading(false);
   }
   const filterData = (value) => {
-     let searchedList = getList(value)
+    let searchedList = getList(value)
     setFilteredList(searchedList);
   }
 
@@ -46,13 +46,13 @@ const Repair = () => {
   }, [searchInput])
 
   const getList = (list) => {
-     const query = (searchInput || "").toLowerCase();
+    const query = (searchInput || "").toLowerCase();
     let searchedList = list.filter(item =>
       (item.name || "").toString().toLowerCase().includes(query) ||
       (item.unit || "").toString().toLowerCase().includes(query) ||
       (item.status || "").toString().toLowerCase().includes(query) ||
       (item.orderno || "").toString().toLowerCase().includes(query) ||
-      (get_Date(item.duedate,'MMM DD')).toString().toLowerCase().includes(query) 
+      (get_Date(item.duedate, 'MMM DD')).toString().toLowerCase().includes(query)
     );
     return searchedList;
   }
@@ -62,7 +62,7 @@ const Repair = () => {
 
   const HeaderItem = ({ title, value }) => {
     return (
-      <div className={`text-center cursor-pointer   group `} onClick={() => {filterData(value); setSearchList(value); setHeader(title)} } >
+      <div className={`text-center cursor-pointer   group `} onClick={() => { filterData(value); setSearchList(value); setHeader(title) }} >
         <p className={`font-bold text-lg ${title === header && 'text-green-500'} group-hover:text-green-500`}>{value.length}</p>
         <p className={`text-xs ${title === header ? 'text-green-500' : 'text-gray-400'} group-hover:text-green-500`}>{title}</p>
       </div>
@@ -93,7 +93,7 @@ const Repair = () => {
       </div>
 
       <div className="p-4 flex justify-between items-center text-gray-500 text-sm  sticky top-0 z-50">
-        <Input size="large" placeholder="Search" prefix={<SearchOutlined />} value={searchInput} onChange={(e) => setSearchInput(e.target.value)} allowClear/>
+        <Input size="large" placeholder="Search" prefix={<SearchOutlined />} value={searchInput} onChange={(e) => setSearchInput(e.target.value)} allowClear />
       </div>
 
       {/* Content */}

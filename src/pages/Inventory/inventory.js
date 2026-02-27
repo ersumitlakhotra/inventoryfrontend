@@ -55,7 +55,7 @@ const Inventory = () => {
 
             {/* Content */}
             <IsLoading isLoading={isLoading} rows={10} input={
-                <div className="p-4 space-y-4 overflow-y-auto h-[calc(100%-180px)]" ref={divRef}>
+                <div className="p-4 space-y-4 overflow-y-auto h-[calc(100%)]" ref={divRef}>
                     {
                         filteredList.length === 0 ?
                             <div className="flex justify-between items-center mt-2 text-xs text-gray-400">

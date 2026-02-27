@@ -22,9 +22,10 @@ const Equipments = () => {
 
     return (
         <div className="w-full mt-4 ">
-            <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold mb-4">Equipment List</h2>
-                <RightOutlined size={12} />
+            <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-semibold ">Equipment List</h2>
+                <h2 className="text-xs text-blue-400 italic ">see all</h2>
+              <RightOutlined size={12} /> 
             </div>
             {/* Scroll Container */}
             <div className="flex gap-3 overflow-x-auto scrollbar-hide cursor-pointer ">
