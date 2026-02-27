@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const API_ENDPOINT = "http://localhost:3000/api/";
-//const API_ENDPOINT = "https://volmz5lsitlia26lmzkjjt537m0umece.lambda-url.ca-central-1.on.aws/api/";
+//const API_ENDPOINT = "http://localhost:3000/api/";
+const API_ENDPOINT = "https://td4orbzbj52jrj77ecwgjjygse0hsrmk.lambda-url.ca-central-1.on.aws/api/";
 
 export const apiCalls = async (method, endPoint,companyId = null, id = null, body = null) => {
     const options = {
