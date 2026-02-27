@@ -42,7 +42,7 @@ const HomePage = () => {
     }
 
     return (
-        <div class="flex flex-col gap-4 p-4  font-normal w-full h-screen bg-white relative">
+        <div class="flex flex-col gap-4 p-4 font-normal w-full overflow-y-auto h-screen bg-white relative">
 
             {/* Header */}
             <div className="flex justify-between items-center ">

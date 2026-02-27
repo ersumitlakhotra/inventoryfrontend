@@ -1,5 +1,5 @@
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect,  useState } from "react";
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { useOutletContext } from "react-router-dom";
 import IsLoading from "../../common/isLoading";
@@ -9,7 +9,6 @@ import { firstDateOfMonth, get_Date, lastDateOfMonth } from "../../common/localD
 import { Input } from "antd";
 
 const Repair = () => {
-  const divRef = useRef(null);
   const [filteredList, setFilteredList] = useState([]);
   const { refresh, isLoading, setIsLoading, repairList, getRepair, editRepair, viewRepair, getItems } = useOutletContext();
   const [searchInput, setSearchInput] = useState('');
@@ -20,9 +19,6 @@ const Repair = () => {
 
   useEffect(() => {
     Init();
-    if (divRef.current) {
-      divRef.current.scrollTop = 0;
-    }
   }, [refresh])
 
   const Init = async () => {
@@ -70,7 +66,7 @@ const Repair = () => {
   }
 
   return (
-    <div class="flex flex-col font-normal w-full h-screen bg-gray-100 relative" ref={divRef}>
+    <div class="flex flex-col font-normal w-full h-screen bg-gray-100 relative" >
 
       {/* Header */}
       <div className="bg-green-500 p-5 text-white  rounded-b-2xl sticky top-0 z-50 ">

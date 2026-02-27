@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect,  useState } from "react";
 import { SearchOutlined, PlusOutlined } from '@ant-design/icons';
 import { Input } from "antd";
 import { useOutletContext } from "react-router-dom";
@@ -6,16 +6,13 @@ import IsLoading from "../../common/isLoading";
 import Card from "./card";
 
 const Equipment = () => {
-    const divRef = useRef(null);
     const [filteredList, setFilteredList] = useState([]);
     const { refresh, isLoading, setIsLoading, equipmentList, getEquipment, editEquipment, viewEquipment } = useOutletContext();
     const [searchInput, setSearchInput] = useState('');
 
     useEffect(() => {
         Init();
-        if (divRef.current) {
-            divRef.current.scrollTop = 0;
-        }
+       
     }, [refresh])
 
     const Init = async () => {
@@ -37,7 +34,7 @@ const Equipment = () => {
     }, [searchInput])
 
     return (
-        <div class="flex flex-col font-normal w-full h-screen bg-gray-100 relative" ref={divRef}>
+        <div class="flex flex-col font-normal w-full h-screen bg-gray-100 relative" >
 
             {/* Header */}
             <div className="bg-blue-500 p-5 text-white  rounded-b-2xl sticky top-0 z-50 ">

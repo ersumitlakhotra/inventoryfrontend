@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect,  useState } from "react";
 import { SearchOutlined, PlusOutlined } from '@ant-design/icons';
 import { Input } from "antd";
 import { useOutletContext } from "react-router-dom";
@@ -7,16 +7,12 @@ import Card from "./card";
 
 const Inventory = () => {
 
-    const divRef = useRef(null);
     const [filteredList, setFilteredList] = useState([]);
     const { refresh, isLoading, setIsLoading, inventoryList, editInventory, viewInventory, getInventory } = useOutletContext();
     const [searchInput, setSearchInput] = useState('');
 
     useEffect(() => {
         Init();
-        if (divRef.current) {
-            divRef.current.scrollTop = 0;
-        }
     }, [refresh])
 
     const Init = async () => {
@@ -38,7 +34,7 @@ const Inventory = () => {
     }, [searchInput])
 
     return (
-        <div class="flex flex-col font-normal w-full h-screen bg-gray-100 relative " ref={divRef}>
+        <div class="flex flex-col font-normal w-full h-screen bg-gray-100 relative ">
 
             {/* Header */}
             <div className="bg-orange-300 p-5 text-white  rounded-b-2xl sticky top-0 z-50 ">

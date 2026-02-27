@@ -63,7 +63,7 @@ const ProtectedLayout = () => {
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });
-    }, [pathname]);
+    }, [activeTab]);
 
     useEffect(() => {
         if (navigationType === "POP") {
