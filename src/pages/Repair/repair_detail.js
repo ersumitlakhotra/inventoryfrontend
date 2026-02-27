@@ -1,7 +1,7 @@
 
-import { Avatar, Badge, Button, DatePicker, Image, Input, Select } from 'antd';
+import { Avatar, Badge, Button, DatePicker, Image, Input, Modal, Select, Tooltip } from 'antd';
 import IsLoading from '../../common/isLoading';
-import { CameraOutlined, CloseOutlined, CloudUploadOutlined, CheckOutlined } from '@ant-design/icons';
+import { CameraOutlined, CloseOutlined, CloudUploadOutlined, CheckOutlined, PlusOutlined } from '@ant-design/icons';
 import { useEffect, useImperativeHandle, useRef, useState } from 'react';
 import FetchData from '../../hook/fetchData';
 import useAlert from '../../common/alert';
@@ -9,10 +9,9 @@ import { TextboxFlex } from '../../common/textbox.js';
 import { LocalDate } from '../../common/localDate.js';
 import dayjs from 'dayjs';
 
-const RepairDetail = ({ id, uid, reload, ref, setOpen, isLoading, setIsLoading, saveData,  equipmentList,itemsList, equipmentId,useEquipmentId=false }) => {
-    let refimage = useRef();
+const RepairDetail = ({ id, uid, reload, ref, setOpen, isLoading, setIsLoading, saveData, equipmentList, itemsList, equipmentId, useEquipmentId = false }) => {
     const { TextArea } = Input;
-    const { error, warning } = useAlert();
+    const {contextHolder,  warning } = useAlert();
     const [unit, setUnit] = useState('');
     const [refid, setRefid] = useState('');
     const [reftype, setReftype] = useState('Equipment');
@@ -25,18 +24,22 @@ const RepairDetail = ({ id, uid, reload, ref, setOpen, isLoading, setIsLoading, 
     const [quantity, setQuantity] = useState('1');
     const [price, setPrice] = useState('0.00');
     const [kilometer, setKilometer] = useState('0.00');
+    const [servicesItem, setServicesItem] = useState([]);
+    
+    const [newService, setNewService] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         if (id === 0) {
-            
-         if(useEquipmentId)
-            setRefid(equipmentId)
-        else
-            setRefid('');
-        
-        setUnit('');setReftype('Equipment'); setName(''); setExpire(LocalDate()); setDuedate(LocalDate()); setStatus('Pending');
+
+            if (useEquipmentId)
+                setRefid(equipmentId)
+            else
+                setRefid('');
+
+            setUnit(''); setReftype('Equipment'); setName(''); setExpire(LocalDate()); setDuedate(LocalDate()); setStatus('Pending');
             setQuantity('1'); setPrice('0.00'); setKilometer('0.00');
-            setDescription(''); setNotes(''); 
+            setDescription(''); setNotes(''); setServicesItem([]);
         }
         else {
             load();
@@ -54,6 +57,7 @@ const RepairDetail = ({ id, uid, reload, ref, setOpen, isLoading, setIsLoading, 
         setRefid(editList.refid);
         setUnit(editList.unit);
         setReftype(editList.reftype);
+        setServicesItem(editList.itemsinfo);
         setName(editList.name);
         setExpire(editList.expiry);
         setDuedate(editList.duedate);
@@ -68,11 +72,11 @@ const RepairDetail = ({ id, uid, reload, ref, setOpen, isLoading, setIsLoading, 
     }
 
     const save = async () => {
-        if (name !== '') {
+        if (unit !== '' && servicesItem.length !==0 ) {
             const Body = JSON.stringify({
                 refid: refid,
                 reftype: reftype,
-                name: name,
+                itemsinfo: servicesItem,
                 description: description,
                 expire: expire,
                 duedate: duedate,
@@ -81,7 +85,7 @@ const RepairDetail = ({ id, uid, reload, ref, setOpen, isLoading, setIsLoading, 
                 notes: notes,
                 price: price,
                 kilometer: kilometer,
-                unit:unit,
+                unit: unit,
                 uid: uid
             });
             saveData({
@@ -97,11 +101,32 @@ const RepairDetail = ({ id, uid, reload, ref, setOpen, isLoading, setIsLoading, 
             warning('Please, fill out the required fields !');
         }
     }
+
     useImperativeHandle(ref, () => {
         return {
             save,
         };
     })
+
+    const handleOk = async () => {
+        if (newService !== '') {
+            const Body = JSON.stringify({
+               type :'Service', 
+               title :newService
+            });
+            saveData({
+                label: "Service",
+                method: 'POST',
+                endPoint: "items",
+                id:null,
+                body: Body
+            });
+            setIsModalOpen(false);
+        }
+        else {
+            warning('Please, fill out the required fields !');
+        }
+    }
 
     return (
         <div class='p-2'>
@@ -111,7 +136,7 @@ const RepairDetail = ({ id, uid, reload, ref, setOpen, isLoading, setIsLoading, 
                         <TextboxFlex label={'Status'} input={
                             <Select
                                 value={status}
-                                style={{ width: '100%' }}
+                                style={{ width: '100%',fontSize: 16  }}
                                 onChange={(value) => { setStatus(value); }}
                                 options={[
                                     { value: 'Pending', label: <Badge color={'yellow'} text={'Pending'} /> },
@@ -121,25 +146,13 @@ const RepairDetail = ({ id, uid, reload, ref, setOpen, isLoading, setIsLoading, 
                                 ]}
                             />
                         } />
-                       {false && <TextboxFlex label={'Category'} input={
-                            <Select
-                                value={reftype}
-                                style={{ width: '100%' }}
-                                onChange={(value) => { setReftype(value);}}
-                                options={[
-                                    { value: 'Equipment', label: 'Equipment' },
-                                    { value: 'Inventory', label: 'Inventory' },
-                                ]}
-                            />
-                        } />
-                    }
 
-                       <TextboxFlex label={'Equipment'} mandatory={true} input={
+                        <TextboxFlex label={'Equipment'} mandatory={true} input={
                             <Select
                                 value={refid}
                                 status={refid === '' ? 'error' : ''}
-                                style={{ width: '100%' }}
-                                onChange={(value,option) => { setRefid(value); setUnit(option.label) }}
+                                style={{ width: '100%',fontSize: 16  }}
+                                onChange={(value, option) => { setRefid(value); setUnit(option.label) }}
                                 options={[
                                     { value: '', label: '' },
                                     ...equipmentList.map(item => ({
@@ -153,56 +166,86 @@ const RepairDetail = ({ id, uid, reload, ref, setOpen, isLoading, setIsLoading, 
                         } />
                         <TextboxFlex label={'Due Date'} mandatory={true} input={
                             <DatePicker
-                                style={{ width: '100%' }}
+                                style={{ width: '100%',fontSize: 16  }}
                                 allowClear={false}
                                 value={duedate === '' ? duedate : dayjs(duedate, 'YYYY-MM-DD')}
                                 onChange={(date, dateString) => { setDuedate(dateString); }} />
                         } />
 
-                        <TextboxFlex label={'Service'} mandatory={true} input={
+                        <TextboxFlex label={'Services'} mandatory={true} input={
+                            <div className='flex gap-1 w-full'>
                             <Select
-                                mode="tags"
-                                value={name}
-                                status={name === '' ? 'error' : ''}
-                                style={{ width: '100%' }}
-                                showSearch
+                                status={servicesItem.length === 0 ? 'error' : ''}
+                                placeholder='Select services'
+                                mode="multiple"
+                                value={servicesItem}
+                                style={{ width: '100%',fontSize: 16  }}
+                                onChange={(value) => { setServicesItem(value);  }}
+                                options={itemsList.map(item => ({
+                                    value: item.id,
+                                    label: item.title
+                                }))}
                                 optionFilterProp="label"
-                                onChange={(value) => {
-                                    // value will be array in tags mode
-                                        setName(value[value.length - 1]);
-                                   
+                                filterSort={(optionA, optionB) => {
+                                    var _a, _b;
+                                    return (
+                                        (_a = optionA === null || optionA === void 0 ? void 0 : optionA.label) !== null &&
+                                            _a !== void 0
+                                            ? _a
+                                            : ''
+                                    )
+                                        .toLowerCase()
+                                        .localeCompare(
+                                            ((_b = optionB === null || optionB === void 0 ? void 0 : optionB.label) !== null &&
+                                                _b !== void 0
+                                                ? _b
+                                                : ''
+                                            ).toLowerCase(),
+                                        );
                                 }}
-                                options={[
-                                    ...itemsList.map(item => ({
-                                        value:  item.title,   // IMPORTANT: use title as value
-                                        label: item.title
-                                    })),
-                                ]}
                             />
+                             <Tooltip placement="top" title={'Add services'} >
+                            <Button type="primary" shape='circle' icon={<PlusOutlined />} size='middle' onClick={()=> {setNewService('');setIsModalOpen(true)}} />
+                            </Tooltip>
+                            </div>
                         } />
 
                         <TextboxFlex label={'Description'} itemsCentre={false} input={
-                            <TextArea placeholder="Description" rows={2} value={description} onChange={(e) => setDescription(e.target.value)} />
+                            <TextArea style={{ fontSize: 16 }}  placeholder="Description" rows={2} value={description} onChange={(e) => setDescription(e.target.value)} />
                         } />
 
 
                         <TextboxFlex label={'Kilometer'} input={
-                            <Input placeholder="Kilometer" value={kilometer} onChange={(e) => setKilometer(e.target.value)} />
+                            <Input style={{ fontSize: 16 }}  placeholder="Kilometer" value={kilometer} onChange={(e) => setKilometer(e.target.value)} />
                         } />
-                        <TextboxFlex label={'Quantity'} input={
-                            <Input placeholder="Quantity" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
-                        } />
+                        {false && <TextboxFlex label={'Quantity'} input={
+                            <Input style={{ fontSize: 16 }}  placeholder="Quantity" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
+                        } />}
 
                         <TextboxFlex label={'Price'} input={
-                            <Input placeholder="Price" value={price} onChange={(e) => setPrice(e.target.value)} />
+                            <Input style={{ fontSize: 16 }}  placeholder="Price" value={price} onChange={(e) => setPrice(e.target.value)} />
                         } />
 
                         <TextboxFlex label={'Notes'} itemsCentre={false} input={
-                            <TextArea placeholder="Notes" rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} />
+                            <TextArea style={{ fontSize: 16 }}  placeholder="Notes" rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} />
                         } />
+
+                        <Modal
+                            title="Add Services"
+                            closable={{ 'aria-label': 'Custom Close Button' }}
+                            open={isModalOpen}
+                            onOk={handleOk}
+                            okText='Save'
+                            onCancel={() => setIsModalOpen(false)}
+                        >
+                            <TextboxFlex label={'Title'} mandatory={true} input={
+                                <Input style={{ fontSize: 16 }}  placeholder="Title" value={newService} onChange={(e) => setNewService(e.target.value)} />
+                            } />
+                        </Modal>
                     </div>
                 </>
             } />
+            {contextHolder}
         </div>
     )
 }

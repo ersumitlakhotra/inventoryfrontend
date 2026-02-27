@@ -10,7 +10,7 @@ const Card = ({ id, color,orderno, textcolor, tag, status, title, description,du
             <div className="flex-1" onClick={() => equipment(id)}>
                 <div className="flex justify-between items-center mb-1">
                     <span className="text-xs text-gray-400 uppercase tracking-wide">
-                        {tag}
+                        Order # {orderno}
                     </span>
 
                     {isEdit ?
@@ -21,7 +21,7 @@ const Card = ({ id, color,orderno, textcolor, tag, status, title, description,du
                     }
                 </div>
                 <div className="flex justify-between items-center mb-1">
-                   <h3 className="font-semibold text-gray-800">{orderno} - {title}</h3>
+                   <h3 className="font-semibold text-gray-800">{tag} - {title}</h3>
                  <span className={`text-xs  font-medium`}>{ get_Date(duedate,'MMM DD, YYYY')}</span>
                     
                 </div>

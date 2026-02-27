@@ -44,7 +44,7 @@ const Users = () => {
                     <PlusOutlined size={22} className="cursor-pointer" onClick={() => editUser(0)} />
                 </div>
 
-                 <Input size="large" placeholder="Search" prefix={<SearchOutlined />} value={searchInput} onChange={(e) => setSearchInput(e.target.value)} allowClear />
+                 <Input size="large" style={{ fontSize: 16 }} placeholder="Search" prefix={<SearchOutlined />} value={searchInput} onChange={(e) => setSearchInput(e.target.value)} allowClear />
           </div>
 
             {/* Content */}

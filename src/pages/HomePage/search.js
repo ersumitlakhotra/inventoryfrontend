@@ -58,8 +58,8 @@ const SearchHome = () => {
                 key: item.id + index,
                 id: item.id,
                 icon: <ToolFilled />,
-                name: `${item.orderno} : ${item.name}`,
-                unit: item.unit,
+                name: `${item.unit} : ${item.name}`,
+                unit: `Order # ${item.orderno}`,
                 user: item.user,
                 status: item.status,
                 modifiedat: item.modifiedat,
@@ -80,7 +80,7 @@ const SearchHome = () => {
                 key: item.id + index,
                 id: item.id,
                 icon: <ProductFilled />,
-                name: item.name,
+                name:item.name,
                 unit: item.user ,
                 user: item.user,
                 status: item.status,
@@ -111,7 +111,7 @@ const SearchHome = () => {
 
     return (
         <div class='w-full flex flex-row items-center relative'>
-            <Input size="large" placeholder="Search" prefix={<SearchOutlined />} value={searchInput} onChange={(e) => setSearchInput(e.target.value)} allowClear />
+            <Input size="large" style={{ fontSize: 16 }}  placeholder="Search" prefix={<SearchOutlined />} value={searchInput} onChange={(e) => setSearchInput(e.target.value)} allowClear />
             <div class={`w-full min-h-[350px] max-h-[350px] overflow-y-scroll border border-gray-400 z-50 bg-white rounded-lg shadow absolute top-10 ${searchInput === '' && 'hidden'} `}>
                 <IsLoading isLoading={isLoading} rows={8} input=
                     {

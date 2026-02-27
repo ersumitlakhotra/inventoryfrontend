@@ -7,10 +7,10 @@ import FetchData from '../../hook/fetchData';
 import useAlert from '../../common/alert';
 import { TextboxFlex } from '../../common/textbox.js';
 
-const EquipmentDetail = ({ id,uid, reload, ref, setOpen, isLoading, setIsLoading, saveData }) => {
+const EquipmentDetail = ({ id,uid, reload, ref, setOpen, isLoading, setIsLoading, saveData,equipmentList }) => {
     let refimage = useRef();
     const { TextArea } = Input;
-    const {  error, warning } = useAlert();
+    const {contextHolder,  error, warning } = useAlert();
     const [unit, setUnit] = useState('');
     const [plate, setPlate] = useState('');
     const [vin, setVin] = useState('');
@@ -83,6 +83,9 @@ const EquipmentDetail = ({ id,uid, reload, ref, setOpen, isLoading, setIsLoading
 
     const save = async () => {
         if (unit !== '') {
+            const isNotExist = equipmentList.filter(item =>  item.id !== id && item.unit.toLowerCase().trim().replace(/\s+/g, '') === unit.toLowerCase().trim().replace(/\s+/g, '')).length ===0;
+            if(isNotExist)
+            {
             const Body = JSON.stringify({
                 unit: unit,
                 plate: plate,
@@ -104,6 +107,9 @@ const EquipmentDetail = ({ id,uid, reload, ref, setOpen, isLoading, setIsLoading
                 body: Body
             });
             setOpen(false);
+        }
+        else
+            error(`Equipment with ${unit} name already Exists!`)
         }
         else {
             warning('Please, fill out the required fields !');
@@ -136,34 +142,34 @@ const EquipmentDetail = ({ id,uid, reload, ref, setOpen, isLoading, setIsLoading
 
                     <div class='flex flex-col font-normal gap-3 '>
                         <TextboxFlex label={'Unit'} mandatory={true} input={
-                            <Input placeholder="Unit" status={unit === '' ? 'error' : ''} value={unit} onChange={(e) => setUnit(e.target.value)} />
+                            <Input placeholder="Unit" style={{ fontSize: 16 }}  status={unit === '' ? 'error' : ''} value={unit} onChange={(e) => setUnit(e.target.value)} />
                         } /> 
                         
                          <TextboxFlex label={'Plate'}  input={
-                            <Input placeholder="Plate"  value={plate} onChange={(e) => setPlate(e.target.value)} />
+                            <Input placeholder="Plate" style={{ fontSize: 16 }}  value={plate} onChange={(e) => setPlate(e.target.value)} />
                         } />
                          <TextboxFlex label={'Vin'}  input={
-                            <Input placeholder="Vin"  value={vin} onChange={(e) => setVin(e.target.value)} />
+                            <Input placeholder="Vin" style={{ fontSize: 16 }}  value={vin} onChange={(e) => setVin(e.target.value)} />
                         } />
 
                          <TextboxFlex label={'Make'}  input={
-                            <Input placeholder="Make"  value={make} onChange={(e) => setMake(e.target.value)} />
+                            <Input placeholder="Make" style={{ fontSize: 16 }}  value={make} onChange={(e) => setMake(e.target.value)} />
                         } />
                         
                          <TextboxFlex label={'Model'}  input={
-                            <Input placeholder="Model"  value={model} onChange={(e) => setModel(e.target.value)} />
+                            <Input placeholder="Model" style={{ fontSize: 16 }}   value={model} onChange={(e) => setModel(e.target.value)} />
                         } />
 
                         
                          <TextboxFlex label={'Year'}  input={
-                            <Input placeholder="Year"  value={year} onChange={(e) => setYear(e.target.value)} />
+                            <Input placeholder="Year" style={{ fontSize: 16 }}  value={year} onChange={(e) => setYear(e.target.value)} />
                         } />
                         <TextboxFlex label={'Description'} itemsCentre={false} input={
-                            <TextArea placeholder="Description" rows={2} value={description} onChange={(e) => setDescription(e.target.value)} />
+                            <TextArea placeholder="Description" style={{ fontSize: 16 }}  rows={2} value={description} onChange={(e) => setDescription(e.target.value)} />
                         } />
 
                          <TextboxFlex label={'Notes'}  itemsCentre={false} input={
-                            <TextArea placeholder="Notes"  rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} />
+                            <TextArea placeholder="Notes" style={{ fontSize: 16 }}  rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} />
                         } />
                         <TextboxFlex label={'Status'} input={
                             <div class='flex flex-row items-center gap-2 w-full'>
@@ -174,6 +180,7 @@ const EquipmentDetail = ({ id,uid, reload, ref, setOpen, isLoading, setIsLoading
                     </div>
                 </>
             } />
+            {contextHolder}
         </div>
     )
 }

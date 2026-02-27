@@ -7,10 +7,10 @@ import FetchData from '../../hook/fetchData';
 import useAlert from '../../common/alert';
 import { TextboxFlex } from '../../common/textbox.js';
 
-const InventoryDetail = ({ id,uid, reload, ref, setOpen, isLoading, setIsLoading, saveData }) => {
+const InventoryDetail = ({ id, uid, reload, ref, setOpen, isLoading, setIsLoading, saveData, inventoryList }) => {
     let refimage = useRef();
     const { TextArea } = Input;
-    const {  error, warning } = useAlert();
+    const { contextHolder, error, warning } = useAlert();
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [unique, setUnique] = useState('');
@@ -74,23 +74,28 @@ const InventoryDetail = ({ id,uid, reload, ref, setOpen, isLoading, setIsLoading
 
     const save = async () => {
         if (name !== '') {
-            const Body = JSON.stringify({
-                name: name,
-                description: description,
-                unique: unique,
-                notes: notes,
-                instock: instock,
-                picture: picture,
-                uid:uid
-            });
-            saveData({
-                label: "Inventory",
-                method: id !== 0 ? 'PUT' : 'POST',
-                endPoint: "inventory",
-                id: id !== 0 ? id : null,
-                body: Body
-            });
-            setOpen(false);
+            const isNotExist = inventoryList.filter(item => item.id !== id && item.name.toLowerCase().trim().replace(/\s+/g, '') === name.toLowerCase().trim().replace(/\s+/g, '')).length === 0;           
+            if (isNotExist) {
+                const Body = JSON.stringify({
+                    name: name,
+                    description: description,
+                    unique: unique,
+                    notes: notes,
+                    instock: instock,
+                    picture: picture,
+                    uid: uid
+                });
+                saveData({
+                    label: "Inventory",
+                    method: id !== 0 ? 'PUT' : 'POST',
+                    endPoint: "inventory",
+                    id: id !== 0 ? id : null,
+                    body: Body
+                });
+                setOpen(false);
+            }
+            else
+                error(`Inventory with ${name} name already Exists!`)
         }
         else {
             warning('Please, fill out the required fields !');
@@ -123,25 +128,26 @@ const InventoryDetail = ({ id,uid, reload, ref, setOpen, isLoading, setIsLoading
 
                     <div class='flex flex-col font-normal gap-3 '>
                         <TextboxFlex label={'Item name'} mandatory={true} input={
-                            <Input placeholder="Item name" status={name === '' ? 'error' : ''} value={name} onChange={(e) => setName(e.target.value)} />
+                            <Input style={{ fontSize: 16 }}  placeholder="Item name" status={name === '' ? 'error' : ''} value={name} onChange={(e) => setName(e.target.value)} />
                         } />
 
                         <TextboxFlex label={'Description'} itemsCentre={false} input={
-                            <TextArea placeholder="Description" rows={4} value={description} onChange={(e) => setDescription(e.target.value)} />
+                            <TextArea style={{ fontSize: 16 }}  placeholder="Description" rows={4} value={description} onChange={(e) => setDescription(e.target.value)} />
                         } />
 
-                         <TextboxFlex label={'Serial #'} input={
-                            <Input placeholder="Serial #"  value={unique} onChange={(e) => setUnique(e.target.value)} />
+                        <TextboxFlex label={'Serial #'} input={
+                            <Input style={{ fontSize: 16 }}  placeholder="Serial #" value={unique} onChange={(e) => setUnique(e.target.value)} />
                         } />
-                         <TextboxFlex label={'In Stock'} input={
-                            <Input placeholder="In Stock"  value={instock} onChange={(e) => setInstock(e.target.value)} />
+                        <TextboxFlex label={'In Stock'} input={
+                            <Input style={{ fontSize: 16 }}  placeholder="In Stock" value={instock} onChange={(e) => setInstock(e.target.value)} />
                         } />
-                         <TextboxFlex label={'Notes'} input={
-                            <TextArea placeholder="Notes" rows={4} value={notes} onChange={(e) => setNotes(e.target.value)} />
+                        <TextboxFlex label={'Notes'} input={
+                            <TextArea style={{ fontSize: 16 }}  placeholder="Notes" rows={4} value={notes} onChange={(e) => setNotes(e.target.value)} />
                         } />
                     </div>
                 </>
             } />
+            {contextHolder}
         </div>
     )
 }

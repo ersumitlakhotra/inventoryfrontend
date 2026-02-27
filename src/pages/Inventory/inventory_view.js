@@ -12,6 +12,8 @@ const InventoryView = ({ id, reload, refresh, isLoading, setIsLoading, editInven
     const [description, setDescription] = useState('');
     const [unique, setUnique] = useState('');
     const [notes, setNotes] = useState('');
+    
+    const [instock, setInstock] = useState('1');
     const [user, setUser] = useState('');
     const [picture, setPicture] = useState(null);
     const [modifiedat, setModifiedat] = useState('');
@@ -35,6 +37,7 @@ const InventoryView = ({ id, reload, refresh, isLoading, setIsLoading, editInven
         setNotes(editList.notes);
         setPicture(editList.picture);
         setUser(editList.user)
+         setInstock(editList.instock);
         setModifiedat(editList.modifiedat)
         setIsLoading(false)
     }
@@ -53,6 +56,7 @@ const InventoryView = ({ id, reload, refresh, isLoading, setIsLoading, editInven
                         description={description}
                         modifiedat={modifiedat}
                         picture={picture}
+                        instock={instock}
                         inventory={editInventory}
                         isEdit={true}
                        

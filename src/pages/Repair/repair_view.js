@@ -65,11 +65,11 @@ const RepairView = ({ id, reload, refresh, isLoading, setIsLoading, editRepair }
                             color={status === "Pending" ? "bg-orange-300" :
                                 status === "In progress" ? "bg-blue-400" :
                                     status === "Completed" ? "bg-green-400" :
-                                        "bg-red:300"}
+                                        "bg-red-500"}
                             textcolor={status === "Pending" ? "text-orange-300" :
                                 status === "In progress" ? "text-blue-400" :
                                     status === "Completed" ? "text-green-400" :
-                                        "text-red:300"}
+                                        "text-red-500"}
                             orderno={orderno}
                             tag={unit}
                             status={status}

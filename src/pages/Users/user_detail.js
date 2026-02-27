@@ -7,7 +7,7 @@ import FetchData from '../../hook/fetchData';
 import useAlert from '../../common/alert';
 import { TextboxFlex } from '../../common/textbox.js';
 
-const UserDetail = ({ id,reload, ref, setOpen,userShowStatus, isLoading, setIsLoading, saveData }) => {
+const UserDetail = ({ id,reload, ref, setOpen,userShowStatus, isLoading, setIsLoading, saveData ,userList}) => {
     let refimage = useRef();
     const { contextHolder, error, warning } = useAlert();
     const [fullname, setFullname] = useState('');
@@ -88,6 +88,9 @@ const UserDetail = ({ id,reload, ref, setOpen,userShowStatus, isLoading, setIsLo
 
     const save = async () => {
        if (fullname !== '' &&  password !== ''  && username.length === 12 && username !== '' ) {
+         const isNotExist = userList.filter(item => item.username === username && item.id !== id).length ===0;
+            if(isNotExist)
+            {
             const Body = JSON.stringify({
                 fullname: fullname,
                 username: username,
@@ -104,6 +107,9 @@ const UserDetail = ({ id,reload, ref, setOpen,userShowStatus, isLoading, setIsLo
                 body: Body
             });
             setOpen(false);
+        }
+        else
+            error(`User with ${username} number already Exists!`)
         }
         else {
             warning('Please, fill out the required fields !');
@@ -138,14 +144,14 @@ const UserDetail = ({ id,reload, ref, setOpen,userShowStatus, isLoading, setIsLo
                     <div class='flex flex-col font-normal gap-3 '>
 
                         <TextboxFlex label={'Name'} mandatory={true} input={
-                            <Input placeholder="Name" status={fullname === '' ? 'error' : ''} value={fullname} onChange={(e) => setFullname(e.target.value)} />
+                            <Input style={{ fontSize: 16 }} placeholder="Name" status={fullname === '' ? 'error' : ''} value={fullname} onChange={(e) => setFullname(e.target.value)} />
                         } />
 
                         <TextboxFlex label={'Cell #'} mandatory={true} input={
-                            <Input placeholder="111-222-3333" value={username} status={username === '' ? 'error' : ''} onChange={(e) => setUsername(setCellFormat(e.target.value))} />
+                            <Input style={{ fontSize: 16 }} placeholder="111-222-3333" value={username} status={username === '' ? 'error' : ''} onChange={(e) => setUsername(setCellFormat(e.target.value))} />
                         } />
                         <TextboxFlex label={'Password'} mandatory={true} input={
-                            <Input placeholder="Password" status={password === '' ? 'error' : ''} value={password} onChange={(e) => setPassword(e.target.value)} />
+                            <Input style={{ fontSize: 16 }} placeholder="Password" status={password === '' ? 'error' : ''} value={password} onChange={(e) => setPassword(e.target.value)} />
                         } />
 
                        {userShowStatus && <TextboxFlex label={'Status'} input={

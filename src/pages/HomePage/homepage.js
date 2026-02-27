@@ -45,7 +45,7 @@ const HomePage = () => {
         <div class="flex flex-col font-normal w-full h-screen bg-gray-100 relative" >
 
             {/* Header */}
-            <div className=" p-4 sticky top-0 z-50 ">
+            <div className=" p-4 bg-gray-100 sticky top-0 z-50 ">
                 <div className="flex justify-between items-center mb-4 ">
                     <div className=" flex flex-row items-center gap-4 ">
                         <div>
@@ -75,7 +75,7 @@ const HomePage = () => {
 
 
             {/* Repairs */}
-            <div className="p-4 space-y-4 overflow-y-auto h-[calc(100%-180px)]" >
+            <div className="p-4 space-y-4 overflow-y-auto h-[calc(100%-220px)]" >
                 <div className="p-4 w-full flex justify-between bg-green-200 rounded-lg shadow cursor-pointer" onClick={() => setActiveTab('repair')}>
                     <div className="flex flex-col gap-1 w-3/4">
                         <h2 className=" font-bold text-green-800">Repair to do</h2>

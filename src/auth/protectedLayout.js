@@ -199,19 +199,17 @@ const ProtectedLayout = () => {
         setReload(reload + 1);
     }
     return (
-        <div class='min-h-screen w-full flex flex-col '>
-            <main class="flex-1">
-                <Outlet context={{
-                    saveData, refresh,
-                    isLoading, setIsLoading,
-                    inventoryList, getInventory, editInventory, viewInventory,
-                    equipmentList, getEquipment, editEquipment,viewEquipment,
-                    repairList, getRepair, editRepair,viewRepair,
-                    userList, getUser, editUser,
-                    itemsList,getItems,
-                    isAdmin, uid,setActiveTab
-                }} />
-            </main>
+        <div class=' w-full flex flex-col justify-between '>
+            <Outlet context={{
+                saveData, refresh,
+                isLoading, setIsLoading,
+                inventoryList, getInventory, editInventory, viewInventory,
+                equipmentList, getEquipment, editEquipment, viewEquipment,
+                repairList, getRepair, editRepair, viewRepair,
+                userList, getUser, editUser,
+                itemsList, getItems,
+                isAdmin, uid, setActiveTab
+            }} />
             <Footer activeTab={activeTab} setActiveTab={setActiveTab} isAdmin={isAdmin} />
 
             {isLoading &&
@@ -236,7 +234,7 @@ const ProtectedLayout = () => {
             {/* Drawer on Add/ Edit order*/}
             <Drawer title={title} placement='right' width={400} onClose={() => setOpenEdit(false)} open={openEdit} zIndex={999}
                 extra={<Space><Button type="primary" icon={<SaveOutlined />} onClick={btnSave} >Save</Button></Space>}>
-                <InventoryDetail id={id} uid={uid} reload={reload} ref={ref} setOpen={setOpenEdit} isLoading={isLoading} setIsLoading={setIsLoading} saveData={saveData} />
+                <InventoryDetail id={id} uid={uid} reload={reload} ref={ref} setOpen={setOpenEdit} isLoading={isLoading} setIsLoading={setIsLoading} saveData={saveData} inventoryList={inventoryList} />
             </Drawer>
             {/* Drawer on View Inventory*/}
             <Drawer title={"Inventory"} placement='bottom' height={'90%'} style={{ backgroundColor: '#F9FAFB' }} onClose={() => setOpenView(false)} open={openView} zIndex={499}>
@@ -247,7 +245,7 @@ const ProtectedLayout = () => {
             {/* Drawer on Add/ Edit Equipment*/}
             <Drawer title={EquipmentTitle} placement='right' width={400} onClose={() => setOpenEquipmentEdit(false)} open={openEquipmentEdit} zIndex={999}
                 extra={<Space><Button type="primary" icon={<SaveOutlined />} onClick={btnSave} >Save</Button></Space>}>
-                <EquipmentDetail id={equipmentid} uid={uid} reload={reload} ref={ref} setOpen={setOpenEquipmentEdit} isLoading={isLoading} setIsLoading={setIsLoading} saveData={saveData} />
+                <EquipmentDetail id={equipmentid} uid={uid} reload={reload} ref={ref} setOpen={setOpenEquipmentEdit} isLoading={isLoading} setIsLoading={setIsLoading} saveData={saveData} equipmentList={equipmentList} />
             </Drawer>
 
             {/* Drawer on View Equipment*/}
@@ -270,7 +268,7 @@ const ProtectedLayout = () => {
             {/* Drawer on Add/ Edit user*/}
             <Drawer title={userTitle} placement='right' width={400} onClose={() => setOpenUser(false)} open={openUser} zIndex={999}
                 extra={<Space><Button type="primary" icon={<SaveOutlined />} onClick={btnSave} >Save</Button></Space>}>
-                <UserDetail id={userId} reload={reload} ref={ref} setOpen={setOpenUser} userShowStatus={userShowStatus} isLoading={isLoading} setIsLoading={setIsLoading} saveData={saveData} />
+                <UserDetail id={userId} reload={reload} ref={ref} setOpen={setOpenUser} userShowStatus={userShowStatus} isLoading={isLoading} setIsLoading={setIsLoading} saveData={saveData} userList={userList} />
             </Drawer>
             {contextHolder}
         </div>

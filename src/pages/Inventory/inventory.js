@@ -46,7 +46,7 @@ const Inventory = () => {
                     <PlusOutlined size={22} className="cursor-pointer" onClick={() => editInventory(0)} />
                 </div>
 
-                <Input size="large" placeholder="Search" prefix={<SearchOutlined />} value={searchInput} onChange={(e) => setSearchInput(e.target.value)} allowClear />
+                <Input size="large" style={{ fontSize: 16 }}  placeholder="Search" prefix={<SearchOutlined />} value={searchInput} onChange={(e) => setSearchInput(e.target.value)} allowClear />
             </div>
 
             {/* Content */}
@@ -66,6 +66,7 @@ const Inventory = () => {
                                     description={item.description}
                                     modifiedat={item.modifiedat}
                                     picture={item.picture}
+                                    instock={item.instock}
                                     inventory={viewInventory}
                                     isEdit={false}
 

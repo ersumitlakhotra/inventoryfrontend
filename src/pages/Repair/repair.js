@@ -86,7 +86,7 @@ const Repair = () => {
           <HeaderItem title={'due month'} value={repairList.filter(item => (item.status === 'Pending' || item.status === 'In progress') && get_Date(item.duedate, 'YYYY-MM-DD') >= fromDate && get_Date(item.duedate, 'YYYY-MM-DD') <= toDate)} />
 
         </div>
-         <Input size="large" placeholder="Search" prefix={<SearchOutlined />} value={searchInput} onChange={(e) => setSearchInput(e.target.value)} allowClear />
+         <Input size="large" style={{ fontSize: 16 }}  placeholder="Search" prefix={<SearchOutlined />} value={searchInput} onChange={(e) => setSearchInput(e.target.value)} allowClear />
       
       </div>
 
@@ -105,11 +105,11 @@ const Repair = () => {
                   color={item.status === "Pending" ? "bg-orange-300" :
                     item.status === "In progress" ? "bg-blue-400" :
                       item.status === "Completed" ? "bg-green-400" :
-                        "bg-red:300"}
+                        "bg-red-500"}
                   textcolor={item.status === "Pending" ? "text-orange-300" :
                     item.status === "In progress" ? "text-blue-400" :
                       item.status === "Completed" ? "text-green-400" :
-                        "text-red:300"}
+                        "text-red-500"}
                   orderno={item.orderno}
                   tag={item.unit}
                   status={item.status}

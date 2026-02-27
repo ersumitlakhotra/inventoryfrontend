@@ -43,7 +43,7 @@ const Equipments = () => {
 
                                 {item.picture !== null ?
                                     <Image width={100} height={100} shape='circle' src={item.picture} style={{ borderRadius: 20 }} /> :
-                                    <Avatar size={104}  style={{ backgroundColor: 'whitesmoke',borderRadius: 20 }} icon={<CameraOutlined style={{ color: 'silver' }} />} />
+                                    <Avatar size={100}  style={{ backgroundColor: 'whitesmoke',borderRadius: 20 }} icon={<CameraOutlined style={{ color: 'silver' }} />} />
                                 }
 
                                 {/* Name */}
