@@ -36,7 +36,7 @@ const Equipment = () => {
         <div class="flex flex-col font-normal w-full h-screen bg-gray-100 relative">
 
             {/* Header */}
-            <div className="bg-gradient-to-r from-blue-600 to-blue-500 p-5 text-white  rounded-b-2xl sticky top-0 z-50 ">
+            <div className="bg-blue-500 p-5 text-white  rounded-b-2xl sticky top-0 z-50 ">
                 <div className="flex justify-between items-center mb-4">
                     <span> </span>
                     <h1 className="font-semibold text-lg">
